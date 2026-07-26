@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A small Spring Boot todo app">
+  <title>My Todos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <main class="app-shell">
+    <header>
+      <p class="eyebrow">SPRING BOOT LEARNING PROJECT</p>
+      <h1>My todos</h1>
+      <p class="intro">A tiny app backed by a Java REST API and an H2 database.</p>
+    </header>
+
+    <form id="todo-form" class="add-todo-form">
+      <div class="composer-fields">
+        <label class="sr-only" for="todo-title">New todo</label>
+        <input id="todo-title" name="title" maxlength="120" autocomplete="off" placeholder="What do you need to do?"
+          required>
+        <label class="sr-only" for="todo-due-date">Due date</label>
+        <input id="todo-due-date" name="dueDate" type="date">
+        <label class="sr-only" for="todo-priority">Priority</label>
+        <select id="todo-priority" name="priority">
+          <option value="MEDIUM">Medium</option>
+          <option value="LOW">Low</option>
+          <option value="HIGH">High</option>
+        </select>
+      </div>
+      <button type="submit">Add todo</button>
+    </form>
+
+    <section class="toolbar" aria-label="Todo filters">
+      <div class="filters" role="group" aria-label="Filter todos">
+        <button class="filter-button is-selected" type="button" data-filter="all">All</button>
+        <button class="filter-button" type="button" data-filter="active">Active</button>
+        <button class="filter-button" type="button" data-filter="completed">Completed</button>
+      </div>
+      <div class="toolbar-actions">
+        <button id="toggle-all-button" class="toolbar-action" type="button">Complete all</button>
+        <button id="clear-completed-button" class="toolbar-action secondary" type="button">Clear completed</button>
+      </div>
+      <span id="todo-count" aria-live="polite"></span>
+    </section>
+
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+    <ul id="todo-list" class="todo-list" aria-label="Todo list"></ul>
+
+    <footer>
+      <span>Tip: use Edit to rename a task or Delete to remove it.</span>
+      <a href="/h2-console" target="_blank" rel="noreferrer">Open H2 console</a>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
