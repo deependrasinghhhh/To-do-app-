@@ -10,12 +10,9 @@ import jakarta.validation.constraints.Size;
  * The JSON shape accepted when a client creates a todo.
  */
 public record CreateTodoRequest(
-        @NotBlank(message = "Title is required.")
-        @Size(max = 120, message = "Title must be at most 120 characters.")
-        String title,
+        @NotBlank(message = "Title is required.") @Size(max = 120, message = "Title must be at most 120 characters.") String title,
         LocalDate dueDate,
-        @Pattern(regexp = "LOW|MEDIUM|HIGH", message = "Priority must be LOW, MEDIUM, or HIGH.")
-        String priority) {
+        @Pattern(regexp = "LOW|MEDIUM|HIGH", message = "Priority must be LOW, MEDIUM, or HIGH.") String priority) {
 
     public CreateTodoRequest {
         if (title != null) {

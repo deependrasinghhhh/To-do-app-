@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public record TodoResponse(Long id, String title, boolean completed, LocalDate dueDate, String priority) {
 
     public static TodoResponse from(Todo todo) {
-        return new TodoResponse(todo.getId(), todo.getTitle(), todo.isCompleted(), todo.getDueDate(), todo.getPriority());
+        return new TodoResponse(todo.getId(), todo.getTitle(), todo.isCompleted(), todo.getDueDate(),
+                todo.getPriority());
     }
 }

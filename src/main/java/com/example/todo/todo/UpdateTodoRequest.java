@@ -11,12 +11,10 @@ import jakarta.validation.constraints.Size;
  * but the request must contain at least one of them.
  */
 public record UpdateTodoRequest(
-        @Size(min = 1, max = 120, message = "Title must be between 1 and 120 characters.")
-        String title,
+        @Size(min = 1, max = 120, message = "Title must be between 1 and 120 characters.") String title,
         Boolean completed,
         LocalDate dueDate,
-        @Pattern(regexp = "LOW|MEDIUM|HIGH", message = "Priority must be LOW, MEDIUM, or HIGH.")
-        String priority) {
+        @Pattern(regexp = "LOW|MEDIUM|HIGH", message = "Priority must be LOW, MEDIUM, or HIGH.") String priority) {
 
     public UpdateTodoRequest {
         if (title != null) {

@@ -43,8 +43,8 @@ class TodoApplicationTests {
     @Test
     void createsATodoThroughTheHttpApi() throws Exception {
         mockMvc.perform(post("/api/todos")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\":\"Test the HTTP API\"}"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"title\":\"Test the HTTP API\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", org.hamcrest.Matchers.startsWith("/api/todos/")))
                 .andExpect(jsonPath("$.title").value("Test the HTTP API"))
@@ -54,8 +54,8 @@ class TodoApplicationTests {
     @Test
     void rejectsABlankTitle() throws Exception {
         mockMvc.perform(post("/api/todos")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\":\"   \"}"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"title\":\"   \"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Title is required."));
     }
@@ -65,8 +65,8 @@ class TodoApplicationTests {
         TodoResponse todo = todoService.create(new CreateTodoRequest("A todo to update", null, "MEDIUM"));
 
         mockMvc.perform(patch("/api/todos/{id}", todo.id())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Provide a title, completed value, due date, or priority."));
     }

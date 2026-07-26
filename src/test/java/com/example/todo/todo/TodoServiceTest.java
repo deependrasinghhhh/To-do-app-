@@ -51,11 +51,23 @@ class TodoServiceTest {
         given(todoRepository.save(any(Todo.class)))
                 .willAnswer(invocation -> invocation.getArgument(0));
 
-        TodoResponse created = todoService.create(new CreateTodoRequest("Plan launch", LocalDate.of(2026, 8, 10), "HIGH"));
+        TodoResponse created = todoService
+                .create(new CreateTodoRequest("Plan launch", LocalDate.of(2026, 8, 10), "HIGH"));
 
         assertThat(created.title()).isEqualTo("Plan launch");
         assertThat(created.dueDate()).isEqualTo(LocalDate.of(2026, 8, 10));
         assertThat(created.priority()).isEqualTo("HIGH");
+    }
+
+    @Test
+    void storesCategoryAndDescriptionWhenProvided() {
+        given(todoRepository.save(any(Todo.class)))
+                .willAnswer(invocation -> invocation.getArgument(0));
+
+        TodoResponse created = todoService.create(new CreateTodoRequest("Plan launch", null, "HIGH", "Work", "Prepare launch checklist"));
+
+        assertThat(created.category()).isEqualTo("Work");
+        assertThat(created.description()).isEqualTo("Prepare launch checklist");
     }
 
     @Test
