@@ -64,7 +64,8 @@ class TodoServiceTest {
         given(todoRepository.save(any(Todo.class)))
                 .willAnswer(invocation -> invocation.getArgument(0));
 
-        TodoResponse created = todoService.create(new CreateTodoRequest("Plan launch", null, "HIGH", "Work", "Prepare launch checklist"));
+        TodoResponse created = todoService
+                .create(new CreateTodoRequest("Plan launch", null, "HIGH", "Work", "Prepare launch checklist"));
 
         assertThat(created.category()).isEqualTo("Work");
         assertThat(created.description()).isEqualTo("Prepare launch checklist");

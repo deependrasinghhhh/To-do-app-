@@ -32,14 +32,16 @@ public class TodoService {
 
     @Transactional
     public TodoResponse create(CreateTodoRequest request) {
-        Todo savedTodo = todoRepository.save(new Todo(request.title(), request.dueDate(), request.priority()));
+        Todo savedTodo = todoRepository.save(new Todo(request.title(), request.dueDate(), request.priority(),
+                request.category(), request.description()));
         return TodoResponse.from(savedTodo);
     }
 
     @Transactional
     public TodoResponse update(long id, UpdateTodoRequest request) {
         Todo todo = findTodo(id);
-        todo.update(request.title(), request.completed(), request.dueDate(), request.priority());
+        todo.update(request.title(), request.completed(), request.dueDate(), request.priority(), request.category(),
+                request.description());
         return TodoResponse.from(todoRepository.save(todo));
     }
 

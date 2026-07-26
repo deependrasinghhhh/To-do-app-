@@ -36,7 +36,7 @@ class RequestValidationTest {
         Set<ConstraintViolation<UpdateTodoRequest>> violations = validator.validate(request);
 
         assertThat(violations).extracting(ConstraintViolation::getMessage)
-                .contains("Provide a title, completed value, due date, or priority.");
+                .contains("Provide a title, completed value, due date, priority, category, or description.");
     }
 
     @Test

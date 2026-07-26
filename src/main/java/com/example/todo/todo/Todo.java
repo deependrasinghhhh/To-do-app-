@@ -32,19 +32,31 @@ public class Todo {
     @Column(length = 20)
     private String priority;
 
+    @Column(length = 50)
+    private String category;
+
+    @Column(length = 500)
+    private String description;
+
     // JPA needs a no-argument constructor to rebuild an entity from the database.
     protected Todo() {
     }
 
     public Todo(String title) {
-        this(title, null, "MEDIUM");
+        this(title, null, "MEDIUM", null, null);
     }
 
     public Todo(String title, LocalDate dueDate, String priority) {
+        this(title, dueDate, priority, null, null);
+    }
+
+    public Todo(String title, LocalDate dueDate, String priority, String category, String description) {
         this.title = title;
         this.completed = false;
         this.dueDate = dueDate;
         this.priority = priority;
+        this.category = category;
+        this.description = description;
     }
 
     public Long getId() {
@@ -67,10 +79,19 @@ public class Todo {
         return priority;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     /**
      * Applies only values that were supplied in a PATCH request.
      */
-    public void update(String title, Boolean completed, LocalDate dueDate, String priority) {
+    public void update(String title, Boolean completed, LocalDate dueDate, String priority, String category,
+            String description) {
         if (title != null) {
             this.title = title;
         }
@@ -82,6 +103,12 @@ public class Todo {
         }
         if (priority != null) {
             this.priority = priority;
+        }
+        if (category != null) {
+            this.category = category;
+        }
+        if (description != null) {
+            this.description = description;
         }
     }
 }

@@ -31,6 +31,13 @@
           <option value="HIGH">High</option>
         </select>
       </div>
+      <div class="composer-fields composer-fields-secondary">
+        <label class="sr-only" for="todo-category">Category</label>
+        <input id="todo-category" name="category" maxlength="50" autocomplete="off" placeholder="Category (optional)">
+        <label class="sr-only" for="todo-description">Description</label>
+        <input id="todo-description" name="description" maxlength="500" autocomplete="off"
+          placeholder="Notes (optional)">
+      </div>
       <button type="submit">Add todo</button>
     </form>
 
@@ -40,6 +47,10 @@
         <button class="filter-button" type="button" data-filter="active">Active</button>
         <button class="filter-button" type="button" data-filter="completed">Completed</button>
       </div>
+      <label class="search-field">
+        <span class="sr-only">Search todos</span>
+        <input id="todo-search" type="search" placeholder="Search tasks">
+      </label>
       <div class="toolbar-actions">
         <button id="toggle-all-button" class="toolbar-action" type="button">Complete all</button>
         <button id="clear-completed-button" class="toolbar-action secondary" type="button">Clear completed</button>

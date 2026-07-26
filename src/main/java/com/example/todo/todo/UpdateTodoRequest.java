@@ -14,7 +14,13 @@ public record UpdateTodoRequest(
         @Size(min = 1, max = 120, message = "Title must be between 1 and 120 characters.") String title,
         Boolean completed,
         LocalDate dueDate,
-        @Pattern(regexp = "LOW|MEDIUM|HIGH", message = "Priority must be LOW, MEDIUM, or HIGH.") String priority) {
+        @Pattern(regexp = "LOW|MEDIUM|HIGH", message = "Priority must be LOW, MEDIUM, or HIGH.") String priority,
+        String category,
+        String description) {
+
+    public UpdateTodoRequest(String title, Boolean completed, LocalDate dueDate, String priority) {
+        this(title, completed, dueDate, priority, null, null);
+    }
 
     public UpdateTodoRequest {
         if (title != null) {
@@ -23,10 +29,17 @@ public record UpdateTodoRequest(
         if (priority != null) {
             priority = priority.toUpperCase();
         }
+        if (category != null) {
+            category = category.strip();
+        }
+        if (description != null) {
+            description = description.strip();
+        }
     }
 
-    @AssertTrue(message = "Provide a title, completed value, due date, or priority.")
+    @AssertTrue(message = "Provide a title, completed value, due date, priority, category, or description.")
     public boolean isUpdateRequested() {
-        return title != null || completed != null || dueDate != null || priority != null;
+        return title != null || completed != null || dueDate != null || priority != null || category != null
+                || description != null;
     }
 }

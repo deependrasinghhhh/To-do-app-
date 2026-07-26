@@ -12,7 +12,13 @@ import jakarta.validation.constraints.Size;
 public record CreateTodoRequest(
         @NotBlank(message = "Title is required.") @Size(max = 120, message = "Title must be at most 120 characters.") String title,
         LocalDate dueDate,
-        @Pattern(regexp = "LOW|MEDIUM|HIGH", message = "Priority must be LOW, MEDIUM, or HIGH.") String priority) {
+        @Pattern(regexp = "LOW|MEDIUM|HIGH", message = "Priority must be LOW, MEDIUM, or HIGH.") String priority,
+        String category,
+        String description) {
+
+    public CreateTodoRequest(String title, LocalDate dueDate, String priority) {
+        this(title, dueDate, priority, null, null);
+    }
 
     public CreateTodoRequest {
         if (title != null) {
@@ -22,6 +28,12 @@ public record CreateTodoRequest(
             priority = "MEDIUM";
         } else {
             priority = priority.toUpperCase();
+        }
+        if (category != null) {
+            category = category.strip();
+        }
+        if (description != null) {
+            description = description.strip();
         }
     }
 }

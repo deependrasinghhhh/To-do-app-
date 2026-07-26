@@ -68,7 +68,8 @@ class TodoApplicationTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("Provide a title, completed value, due date, or priority."));
+                .andExpect(jsonPath("$.message")
+                        .value("Provide a title, completed value, due date, priority, category, or description."));
     }
 
     @Test

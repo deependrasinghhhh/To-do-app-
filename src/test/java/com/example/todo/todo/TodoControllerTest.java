@@ -26,8 +26,8 @@ class TodoControllerTest {
 
     @Test
     void findAllReturnsAllTodosFromTheService() {
-        TodoResponse first = new TodoResponse(1L, "First", false, null, "MEDIUM");
-        TodoResponse second = new TodoResponse(2L, "Second", true, null, "LOW");
+        TodoResponse first = new TodoResponse(1L, "First", false, null, "MEDIUM", null, null);
+        TodoResponse second = new TodoResponse(2L, "Second", true, null, "LOW", null, null);
         given(todoService.findAll()).willReturn(List.of(first, second));
 
         List<TodoResponse> response = todoController.findAll();
@@ -37,7 +37,7 @@ class TodoControllerTest {
 
     @Test
     void findByIdDelegatesToTheService() {
-        TodoResponse response = new TodoResponse(7L, "Test", true, null, "HIGH");
+        TodoResponse response = new TodoResponse(7L, "Test", true, null, "HIGH", null, null);
         given(todoService.findById(7L)).willReturn(response);
 
         TodoResponse result = todoController.findById(7L);
@@ -48,7 +48,7 @@ class TodoControllerTest {
     @Test
     void createReturnsCreatedResponseWithLocationHeader() {
         CreateTodoRequest request = new CreateTodoRequest("Write tests", null, "MEDIUM");
-        TodoResponse created = new TodoResponse(9L, "Write tests", false, null, "MEDIUM");
+        TodoResponse created = new TodoResponse(9L, "Write tests", false, null, "MEDIUM", null, null);
         given(todoService.create(any(CreateTodoRequest.class))).willReturn(created);
 
         ResponseEntity<TodoResponse> response = todoController.create(request);
@@ -61,7 +61,7 @@ class TodoControllerTest {
     @Test
     void updateDelegatesToTheService() {
         UpdateTodoRequest request = new UpdateTodoRequest("Updated", true, null, null);
-        TodoResponse response = new TodoResponse(3L, "Updated", true, null, "MEDIUM");
+        TodoResponse response = new TodoResponse(3L, "Updated", true, null, "MEDIUM", null, null);
         given(todoService.update(3L, request)).willReturn(response);
 
         TodoResponse result = todoController.update(3L, request);

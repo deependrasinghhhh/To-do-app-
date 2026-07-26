@@ -3,11 +3,15 @@ const apiUrl = "/api/todos";
 let todos = [];
 let activeFilter = "all";
 let editingTodoId = null;
+let searchQuery = "";
 
 const form = document.querySelector("#todo-form");
 const titleInput = document.querySelector("#todo-title");
 const dueDateInput = document.querySelector("#todo-due-date");
 const priorityInput = document.querySelector("#todo-priority");
+const categoryInput = document.querySelector("#todo-category");
+const descriptionInput = document.querySelector("#todo-description");
+const searchInput = document.querySelector("#todo-search");
 const todoList = document.querySelector("#todo-list");
 const todoCount = document.querySelector("#todo-count");
 const message = document.querySelector("#message");
@@ -39,13 +43,27 @@ async function loadTodos() {
 }
 
 function filteredTodos() {
-  if (activeFilter === "active") {
-    return todos.filter((todo) => !todo.completed);
-  }
-  if (activeFilter === "completed") {
-    return todos.filter((todo) => todo.completed);
-  }
-  return todos;
+  const query = searchQuery.trim().toLowerCase();
+  const filtered = todos.filter((todo) => {
+    const matchesFilter = activeFilter === "active"
+      ? !todo.completed
+      : activeFilter === "completed"
+        ? todo.completed
+        : true;
+
+    if (!matchesFilter) {
+      return false;
+    }
+
+    if (!query) {
+      return true;
+    }
+
+    const haystack = [todo.title, todo.description, todo.category].filter(Boolean).join(" ").toLowerCase();
+    return haystack.includes(query);
+  });
+
+  return filtered;
 }
 
 function updateToolbarState() {
@@ -142,6 +160,13 @@ function createTodoElement(todo) {
       meta.append(dueDate);
     }
 
+    if (todo.category) {
+      const category = document.createElement("span");
+      category.className = "category-pill";
+      category.textContent = todo.category;
+      meta.append(category);
+    }
+
     if (todo.priority) {
       const priority = document.createElement("span");
       priority.className = `priority-pill ${todo.priority.toLowerCase()}`;
@@ -149,7 +174,14 @@ function createTodoElement(todo) {
       meta.append(priority);
     }
 
-    content.append(title, meta);
+    if (todo.description) {
+      const description = document.createElement("p");
+      description.className = "todo-description";
+      description.textContent = todo.description;
+      content.append(title, meta, description);
+    } else {
+      content.append(title, meta);
+    }
   }
 
   const actions = document.createElement("div");
@@ -295,12 +327,16 @@ form.addEventListener("submit", async (event) => {
       body: JSON.stringify({
         title,
         dueDate: dueDateInput.value || null,
-        priority: priorityInput.value
+        priority: priorityInput.value,
+        category: categoryInput.value.trim() || null,
+        description: descriptionInput.value.trim() || null
       })
     });
     titleInput.value = "";
     dueDateInput.value = "";
     priorityInput.value = "MEDIUM";
+    categoryInput.value = "";
+    descriptionInput.value = "";
     titleInput.focus();
     showMessage("Todo added.");
     await loadTodos();
@@ -325,6 +361,11 @@ toggleAllButton.addEventListener("click", () => {
 
 clearCompletedButton.addEventListener("click", () => {
   void clearCompletedTodos();
+});
+
+searchInput.addEventListener("input", (event) => {
+  searchQuery = event.target.value;
+  render();
 });
 
 loadTodos();

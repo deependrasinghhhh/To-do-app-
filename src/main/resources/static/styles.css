@@ -84,9 +84,15 @@ h1 {
   gap: 0.65rem;
 }
 
+.composer-fields-secondary {
+  grid-template-columns: 1fr 1.5fr;
+  margin-top: 0.4rem;
+}
+
 .add-todo-form input,
 .add-todo-form select,
-.todo-edit-input {
+.todo-edit-input,
+.search-field input {
   width: 100%;
   min-width: 0;
   padding: 0.85rem 1rem;
@@ -156,6 +162,16 @@ h1 {
   display: flex;
   gap: 0.4rem;
   flex-wrap: wrap;
+}
+
+.search-field {
+  display: flex;
+  align-items: center;
+}
+
+.search-field input {
+  min-width: 10rem;
+  padding: 0.5rem 0.7rem;
 }
 
 .toolbar-action {
@@ -234,6 +250,23 @@ h1 {
   gap: 0.35rem;
   color: #64748b;
   font-size: 0.8rem;
+}
+
+.todo-description {
+  color: #475569;
+  font-size: 0.84rem;
+}
+
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.18rem 0.45rem;
+  border-radius: 999px;
+  color: #1d4ed8;
+  background: #eff6ff;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .priority-pill {
@@ -344,6 +377,11 @@ footer a {
   .toolbar {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .search-field input {
+    min-width: 0;
+    width: 100%;
   }
 
   footer {
